@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplan & Daily Activity - PT Pelican Mitra Sejati</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+        .bg-metallic-panel {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            border-bottom: 2px solid #334155;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+        }
+        .text-3d-red {
+            color: #ef4444;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+    
+    <script>
+        // Dynamic Inject Web App Manifest for PWA Support
+        const manifestData = {
+            "name": "Workplan Pelican Mitra Sejati",
+            "short_name": "Workplan",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#0f172a",
+            "theme_color": "#0f172a",
+            "icons": [{
+                "src": "https://placehold.co/192x192/dc2626/ffffff?text=P",
+                "sizes": "192x192",
+                "type": "image/png"
+            }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = manifestURL;
+        document.head.appendChild(manifestLink);
+    </script>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800 antialiased">
+
+    <!-- Header Navigation Bar -->
+    <header class="bg-metallic-panel text-white sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                
+                <!-- Logo & Company Branding (Hyperlinked to Website) -->
+                <a href="https://pelican-ms.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 group transition-transform transform hover:scale-[1.02]">
+                    <!-- Pelican Red Square Icon with Sample Photo Logo -->
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-red-600 rounded-xl p-0.5 shadow-xl flex items-center justify-center border border-red-500/60 group-hover:bg-red-500 transition-colors shrink-0 overflow-hidden">
+                        <img src="https://placehold.co/200x200/dc2626/ffffff?text=PELICAN" 
+                             alt="Pelican Mitra Sejati Logo" 
+                             class="w-full h-full object-cover rounded-lg"
+                             onerror="this.onerror=null; this.src='https://placehold.co/200x200/dc2626/ffffff?text=PELICAN';">
+                    </div>
+
+                    <!-- Official 3-Line Branding: PELICAN / MITRA / SEJATI -->
+                    <div class="flex flex-col justify-center leading-none font-black uppercase tracking-tight font-sans">
+                        <span class="text-base sm:text-lg text-red-500 tracking-wider text-3d-red">PELICAN</span>
+                        <span class="text-xs sm:text-sm text-white tracking-wider mt-0.5">MITRA</span>
+                        <span class="text-xs sm:text-sm text-white tracking-wider mt-0.5">SEJATI</span>
+                    </div>
+                </a>
+
+                <!-- Top Quick Actions & Navigation Controls -->
+                <div class="flex items-center gap-2 sm:gap-3 ml-auto">
+                    <!-- Auth Status Indicator Button -->
+                    <button id="authBtn" onclick="toggleAuthModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium rounded-lg border border-slate-700 transition-colors">
+                        <i id="authIcon" class="fa-solid fa-user-lock text-amber-400"></i>
+                        <span id="authLabel" class="text-slate-300">Pengunjung</span>
+                    </button>
+
+                    <!-- Current Month Pill -->
+                    <div class="hidden lg:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-cyan-300 font-medium">
+                        <i class="fa-regular fa-calendar-days text-cyan-400"></i>
+                        <span id="currentDateDisplay">Agustus 2026</span>
+                    </div>
+
+                    <!-- User Avatar Pill -->
+                    <div class="w-8 h-8 rounded-full bg-cyan-600 border border-cyan-400 flex items-center justify-center text-xs font-extrabold text-white shadow-sm">
+                        PE
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Dashboard Sub-Header Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6 mb-6">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2.5 py-0.5 rounded-md text-[11px] font-extrabold bg-red-100 text-red-700 border border-red-200">
+                            PT PELICAN MITRA SEJATI
+                        </span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                        Workplan Automation, Mechanic & Electrician
+                    </h2>
+                    <p class="mt-1 text-xs sm:text-sm text-slate-500 flex items-center gap-1.5">
+                        <i class="fa-solid fa-microchip text-cyan-600"></i>
+                        <span>Lacak jadwal instalasi, otomatisasi sistem, deadline, dan laporan harian engineering.</span>
+                    </p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4 gap-2.5">
+                    <button type="button" onclick="exportPDF()" class="inline-flex items-center px-4 py-2 border border-slate-300 rounded-xl shadow-sm text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-file-pdf mr-2 text-red-600 text-sm"></i> Ekspor PDF
+                    </button>
+                    <button type="button" onclick="openTaskModal()" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-md text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-colors">
+                        <i class="fa-solid fa-plus mr-2"></i> Tambah Pekerjaan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation Bar -->
+        <div class="flex border-b border-slate-200 mb-6 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200">
+            <button id="tabWorkplanBtn" onclick="switchTab('workplan')" class="flex-1 py-2.5 px-4 text-center rounded-lg font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-slate-900 text-white shadow-sm">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Workplan Project</span>
+            </button>
+            <button id="tabActivityBtn" onclick="switchTab('activity')" class="flex-1 py-2.5 px-4 text-center rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                <i class="fa-solid fa-camera-retro text-red-600"></i>
+                <span>Daily Activity & Laporan Foto</span>
+                <span id="activityBadgeCount" class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full font-bold ml-1">0</span>
+            </button>
+        </div>
+
+        <!-- Tab Section 1: Workplan Main View -->
+        <div id="workplanViewContainer">
+            <!-- Dynamic Metric Cards -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+                <!-- Total Tasks -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Total Pekerjaan</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="stat-total">0 Tugas</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                </div>
+                <!-- In Progress Tasks -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Dalam Proses</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="stat-process">0 Tugas</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-spinner animate-spin"></i>
+                    </div>
+                </div>
+                <!-- Completed Tasks -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Selesai</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="stat-done">0 Tugas</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                </div>
+                <!-- Overall Progress -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Progres Keseluruhan</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="overall-progress-text">0%</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Tasks Table Card -->
+            <div class="bg-white shadow-sm rounded-2xl border border-slate-200 overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-200 bg-slate-50 flex flex-wrap justify-between items-center gap-3">
+                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-cyan-600"></i> Rincian Jadwal & Workplan
+                    </h3>
+                    <div class="flex items-center gap-3">
+                        <button onclick="resetDefaultData()" class="text-xs text-slate-500 hover:text-red-600 underline font-medium">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Reset Data Default
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Planning Pekerjaan (Tugas)
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Divisi & PIC (Pekerja)
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Jadwal Mulai
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Deadline
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider min-w-[180px]">
+                                    Persentase Progres
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-right text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Aksi
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-100" id="workplan-body">
+                            <!-- Dynamic Rows Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer Summary -->
+                <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 text-xs text-slate-500 font-medium" id="table-summary-text">
+                    Menampilkan 0 pekerjaan.
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Section 2: Daily Activity Log View -->
+        <div id="activityViewContainer" class="hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list text-red-600"></i> Daily Activity & Laporan Lapangan
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">Dokumentasikan aktivitas harian, kendala, dan bukti foto pengerjaan di lapangan.</p>
+                </div>
+                <button onclick="openActivityModal()" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors">
+                    <i class="fa-solid fa-camera mr-2"></i> Input Daily Activity
+                </button>
+            </div>
+
+            <!-- Activity Logs Feed Grid -->
+            <div id="activityFeedList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Activity Cards Rendered via JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Form Task / Pekerjaan (Add & Edit) -->
+    <div id="taskModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-lg mx-4 overflow-hidden transform transition-all flex flex-col">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white border-b border-slate-800">
+                <h3 class="text-base font-bold flex items-center gap-2" id="taskModalTitle">
+                    <i class="fa-solid fa-pen-to-square text-cyan-400"></i> Form Pekerjaan
+                </h3>
+                <button onclick="closeTaskModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="taskForm" onsubmit="saveTaskForm(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar">
+                <input type="hidden" id="taskId">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Judul Pekerjaan / Planning</label>
+                    <input type="text" id="taskTitle" required placeholder="Contoh: Maintenance PLC & SCADA" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Divisi Pekerjaan</label>
+                        <select id="taskDivision" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                            <option value="Divisi Automation">Divisi Automation</option>
+                            <option value="Divisi Electrician">Divisi Electrician</option>
+                            <option value="Divisi Mechanic">Divisi Mechanic</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Penanggung Jawab (PIC)</label>
+                        <input type="text" id="taskAssignee" placeholder="Nama Engineer / Teknisi" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tanggal Mulai</label>
+                        <input type="date" id="taskStartDate" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Deadline / Target</label>
+                        <input type="date" id="taskDeadline" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Status Pekerjaan</label>
+                        <select id="taskStatus" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                            <option value="Belum Mulai">Belum Mulai</option>
+                            <option value="Dalam Proses">Dalam Proses</option>
+                            <option value="Selesai">Selesai</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Progres (%)</label>
+                        <input type="number" id="taskProgress" min="0" max="100" required placeholder="0-100" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2.5 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Pekerjaan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Login Admin / Divisi -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md mx-4 overflow-hidden">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white">
+                <h3 class="text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> Login Hak Akses Divisi / Admin
+                </h3>
+                <button onclick="closeLoginModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Login sesuai divisi Anda untuk dapat menambah & mengedit pekerjaan divisi sendiri. Pekerjaan divisi lain terlindungi dari perubahan.
+                </p>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Username / Akun</label>
+                    <input type="text" id="loginUsername" required placeholder="Contoh: admin atau automation" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                
+                <!-- Password Reference Table -->
+                <div class="text-[11px] bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+                    <div class="font-bold text-slate-700 flex items-center gap-1 mb-1">
+                        <i class="fa-solid fa-key text-amber-500"></i> Daftar Akun & Password Divisi:
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5 text-[11px] text-slate-600">
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-cyan-700 block">Automation:</span>
+                            User: <code class="text-slate-900 font-bold">automation</code><br>Pass: <code class="text-red-600 font-bold">auto2026</code>
+                        </div>
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-amber-700 block">Electrician:</span>
+                            User: <code class="text-slate-900 font-bold">electrician</code><br>Pass: <code class="text-red-600 font-bold">elec2026</code>
+                        </div>
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-blue-700 block">Mechanic:</span>
+                            User: <code class="text-slate-900 font-bold">mechanic</code><br>Pass: <code class="text-red-600 font-bold">mech2026</code>
+                        </div>
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-slate-900 block">Master Admin:</span>
+                            User: <code class="text-slate-900 font-bold">admin</code><br>Pass: <code class="text-red-600 font-bold">pelican2026</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-right-to-bracket"></i> Masuk Akun
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Form Daily Activity & Foto -->
+    <div id="activityModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-lg mx-4 overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white border-b border-slate-800">
+                <h3 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-pen-clip text-cyan-400"></i> Form Laporan Daily Activity
+                </h3>
+                <button onclick="closeActivityModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="activityForm" onsubmit="saveActivityForm(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tugas / Project Terkait</label>
+                    <select id="actTaskId" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tanggal & Waktu</label>
+                        <input type="datetime-local" id="actDate" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nama Engineer / PIC</label>
+                        <input type="text" id="actEngineer" required placeholder="Nama Teknisi" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Uraian Kegiatan / Progress</label>
+                    <textarea id="actDescription" required rows="3" placeholder="Jelaskan aktivitas pengerjaan yang dilakukan..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Catatan / Kendala (Opsional)</label>
+                    <input type="text" id="actNotes" placeholder="Contoh: Menunggu sparepart tambahan" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Unggah Foto Dokumentasi Lapangan</label>
+                    <input type="file" id="actPhotoInput" accept="image/*" onchange="previewActivityPhoto(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+                    
+                    <div id="actPhotoPreviewContainer" class="mt-3 hidden relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 max-h-48 flex justify-center items-center">
+                        <img id="actPhotoPreview" class="max-h-48 object-contain rounded-lg" alt="Preview Foto">
+                        <button type="button" onclick="removePhotoPreview()" class="absolute top-2 right-2 bg-red-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs shadow-md">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2.5 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeActivityModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-paper-plane"></i> Simpan Daily Activity
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Login Admin -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-sm mx-4 overflow-hidden">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white">
+                <h3 class="text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-lock text-amber-400"></i> Login Hak Akses Admin
+                </h3>
+                <button onclick="closeLoginModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
+                <p class="text-xs text-slate-500">
+                    Masukkan username & password admin untuk mengubah data workplan.
+                </p>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Username</label>
+                    <input type="text" id="loginUsername" required placeholder="admin" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                <div class="text-[11px] text-slate-400 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                    Default: Username <strong class="text-slate-700">admin</strong> | Password <strong class="text-slate-700">pelican2026</strong>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition-colors">
+                        Masuk Admin
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Delete Confirmation -->
+    <div id="deleteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-sm mx-4 p-6 text-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Konfirmasi Hapus</h3>
+            <p class="text-xs text-slate-500 mt-2" id="deleteModalText">Apakah Anda yakin ingin menghapus data ini?</p>
+            <div class="flex justify-center gap-2.5 mt-5">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                    Batal
+                </button>
+                <button id="confirmDeleteBtn" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md">
+                    Ya, Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Convert & Install APK Guide -->
+    <div id="apkModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-lg overflow-hidden">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white">
+                <h3 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-android text-emerald-400"></i> Panduan Convert ke APK Android
+                </h3>
+                <button onclick="closeApkModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4 text-xs text-slate-600 leading-relaxed">
+                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-emerald-900 font-medium">
+                    <p class="font-bold text-emerald-800 mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt text-emerald-600"></i> Cara Tercepat (Install PWA Instan)
+                    </p>
+                    Aplikasi ini sudah mendukung PWA. Cukup tekan tombol <strong class="text-red-600">"Install HP"</strong> di bagian atas header browser Google Chrome HP Anda untuk memasang langsung tanpa file APK.
+                </div>
+
+                <p class="font-bold text-slate-800">Atau ubah file HTML ini menjadi file .APK gratis:</p>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li>Buka layanan converter web online seperti <a href="https://www.webintoapp.com" target="_blank" class="text-cyan-600 font-bold underline">WebIntoApp.com</a> atau <a href="https://www.pwabuilder.com" target="_blank" class="text-cyan-600 font-bold underline">PWABuilder.com</a>.</li>
+                    <li>Upload berkas <strong class="text-slate-800">workplan.html</strong> ini atau masukkan URL web dashboard Anda.</li>
+                    <li>Klik <strong class="text-slate-800">"Generate APK"</strong> lalu download file <strong class="text-emerald-700 font-bold">.apk</strong> yang dihasilkan.</li>
+                    <li>Transfer file `.apk` ke smartphone Android dan pasang (install).</li>
+                </ol>
+            </div>
+            <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex justify-end">
+                <button onclick="closeApkModal()" class="px-5 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal Foto -->
+    <div id="lightboxModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center z-50 hidden p-4" onclick="closeLightbox()">
+        <div class="relative max-w-4xl max-h-[90vh] w-full flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-10 right-0 text-white text-2xl hover:text-red-400">
+                <i class="fa-solid fa-xmark"></i> Tutup
+            </button>
+            <img id="lightboxImg" class="max-h-[80vh] w-auto object-contain rounded-xl shadow-2xl border border-slate-700" alt="Preview Lightbox">
+            <p id="lightboxCaption" class="text-white text-center mt-3 text-xs font-medium bg-slate-900/80 px-4 py-2 rounded-full border border-slate-700"></p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700 text-xs font-bold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all z-50 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toastMessage">Pesan Notifikasi</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const STORAGE_KEY = 'pelican_workplan_tasks_v1';
+        const ACTIVITY_STORAGE_KEY = 'pelican_workplan_activities_v1';
+        const AUTH_SESSION_KEY = 'pelican_workplan_user_role_v2';
+
+        // Division Accounts Credentials
+        const DIVISION_ACCOUNTS = {
+            'admin': { pass: 'pelican2026', name: 'Master Admin', division: 'ALL' },
+            'automation': { pass: 'auto2026', name: 'Divisi Automation', division: 'Divisi Automation' },
+            'electrician': { pass: 'elec2026', name: 'Divisi Electrician', division: 'Divisi Electrician' },
+            'mechanic': { pass: 'mech2026', name: 'Divisi Mechanic', division: 'Divisi Mechanic' }
+        };
+
+        let deferredPrompt = null;
+        let deleteTargetId = null;
+        let deleteTargetType = null; // 'task' or 'activity'
+        let currentPhotoDataUrl = '';
+        let pendingAction = null;
+
+        function getAuthUser() {
+            const stored = sessionStorage.getItem(AUTH_SESSION_KEY);
+            if (!stored) return null;
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function isAdmin() {
+            const user = getAuthUser();
+            return user !== null; // Logged in as any valid role/division
+        }
+
+        function canModifyDivision(targetDivision) {
+            const user = getAuthUser();
+            if (!user) return false;
+            if (user.division === 'ALL') return true; // Master Admin has full access
+            return user.division === targetDivision;
+        }
+
+        // Default Sample Tasks
+        const defaultTasks = [
+            { id: 1, title: 'Instalasi & Wiring Controller PLC Siemens S7-1200 Line A', division: 'Divisi Automation', assignee: 'Budi (Automation Eng.)', startDate: '2026-08-01', deadline: '2026-08-10', status: 'Selesai', progress: 100 },
+            { id: 2, title: 'Desain HMI Touchscreen & Integration SCADA System', division: 'Divisi Automation', assignee: 'Andi (Software Eng.)', startDate: '2026-08-05', deadline: '2026-08-18', status: 'Selesai', progress: 100 },
+            { id: 3, title: 'Kalibrasi Sensor Proximity & Optical Switch Conveyor Belt', division: 'Divisi Electrician', assignee: 'Eko (Senior Electrician)', startDate: '2026-08-12', deadline: '2026-08-25', status: 'Dalam Proses', progress: 75 },
+            { id: 4, title: 'Programming Logic Safety Interlock & Alarm Panel Emergency', division: 'Divisi Automation', assignee: 'Heri (Controls Eng.)', startDate: '2026-08-15', deadline: '2026-08-28', status: 'Dalam Proses', progress: 50 },
+            { id: 5, title: 'Perbaikan Gearbox & Alignment Conveyor Motor Line 2', division: 'Divisi Mechanic', assignee: 'Dedi (Mechanical Eng.)', startDate: '2026-08-22', deadline: '2026-08-30', status: 'Dalam Proses', progress: 20 },
+            { id: 6, title: 'Dokumentasi As-Built Drawing & User Manual Training', division: 'Divisi Electrician', assignee: 'Fajar (Electrician)', startDate: '2026-08-28', deadline: '2026-09-05', status: 'Belum Mulai', progress: 0 }
+        ];
+
+        // Default Sample Daily Activities
+        const defaultActivities = [
+            {
+                id: 101,
+                taskId: 3,
+                date: '2026-08-20T14:30',
+                engineer: 'Eko (Senior Electrician)',
+                description: 'Melakukan wiring controller PLC dan pengetesan sensor proximity pada conveyor belt line A.',
+                notes: 'Semua sensor berfungsi normal.',
+                photo: ''
+            }
+        ];
+
+        function getTasks() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (!stored) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultTasks));
+                return defaultTasks;
+            }
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return defaultTasks;
+            }
+        }
+
+        function saveTasks(tasks) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            renderTasks();
+            updateStats();
+        }
+
+        function renderTasks() {
+            const tasks = getTasks();
+            const tbody = document.getElementById('workplan-body');
+            tbody.innerHTML = '';
+
+            if (tasks.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-6 py-8 text-center text-xs text-slate-400">
+                            Belum ada data pekerjaan. Klik "+ Tambah Pekerjaan" untuk menambahkan.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tasks.forEach(task => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition-colors';
+
+                // Status Badge Styling
+                let statusBadgeClass = 'bg-slate-100 text-slate-700 border-slate-200';
+                if (task.status === 'Selesai') statusBadgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+                else if (task.status === 'Dalam Proses') statusBadgeClass = 'bg-amber-100 text-amber-800 border-amber-200';
+                else if (task.status === 'Belum Mulai') statusBadgeClass = 'bg-slate-100 text-slate-600 border-slate-200';
+
+                // Division Badge Styling
+                let divBadgeClass = 'bg-cyan-50 text-cyan-800 border-cyan-200';
+                let divIcon = 'fa-microchip';
+                if (task.division === 'Divisi Electrician') {
+                    divBadgeClass = 'bg-amber-50 text-amber-800 border-amber-200';
+                    divIcon = 'fa-bolt';
+                } else if (task.division === 'Divisi Mechanic') {
+                    divBadgeClass = 'bg-blue-50 text-blue-800 border-blue-200';
+                    divIcon = 'fa-gears';
+                }
+
+                // Progress Bar Color
+                let progressBarColor = 'bg-cyan-500';
+                if (task.progress >= 100) progressBarColor = 'bg-emerald-500';
+                else if (task.progress <= 25) progressBarColor = 'bg-amber-500';
+
+                // Check division edit permission
+                const hasPermission = canModifyDivision(task.division);
+                
+                let actionButtonsHTML = '';
+                if (hasPermission) {
+                    actionButtonsHTML = `
+                        <button onclick="editTask(${task.id})" class="text-cyan-600 hover:text-cyan-800 font-bold mr-3" title="Edit pekerjaan">
+                            <i class="fa-solid fa-pen"></i> Edit
+                        </button>
+                        <button onclick="confirmDeleteTask(${task.id})" class="text-red-500 hover:text-red-700 font-bold" title="Hapus pekerjaan">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    `;
+                } else {
+                    actionButtonsHTML = `
+                        <span class="text-slate-400 text-[11px] font-medium inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded border border-slate-200" title="Terkunci: Membutuhkan login ${task.division} atau Admin Master">
+                            <i class="fa-solid fa-lock text-amber-500"></i> Terkunci
+                        </span>
+                    `;
+                }
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-xs text-slate-900">
+                        ${task.title}
+                    </td>
+                    <td class="px-6 py-4 text-xs">
+                        <div class="flex flex-col gap-1 items-start">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-extrabold border ${divBadgeClass}">
+                                <i class="fa-solid ${divIcon}"></i> ${task.division || 'Divisi Automation'}
+                            </span>
+                            <span class="text-[11px] font-semibold text-slate-600 flex items-center gap-1">
+                                <i class="fa-solid fa-user-gear text-slate-400"></i> ${task.assignee || '-'}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-xs text-slate-600">
+                        ${formatDate(task.startDate)}
+                    </td>
+                    <td class="px-6 py-4 text-xs text-slate-600 font-semibold">
+                        ${formatDate(task.deadline)}
+                    </td>
+                    <td class="px-6 py-4 text-xs">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold border ${statusBadgeClass}">
+                            ${task.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-xs">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-1 bg-slate-200 h-2 rounded-full overflow-hidden">
+                                <div class="${progressBarColor} h-full rounded-full transition-all duration-500" style="width: ${task.progress}%"></div>
+                            </div>
+                            <span class="font-extrabold text-slate-800 w-10 text-right">${task.progress}%</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-right text-xs font-medium">
+                        ${actionButtonsHTML}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateStats() {
+            const tasks = getTasks();
+            const total = tasks.length;
+            const inProgress = tasks.filter(t => t.status === 'Dalam Proses').length;
+            const done = tasks.filter(t => t.status === 'Selesai').length;
+
+            let totalProgressSum = 0;
+            tasks.forEach(t => totalProgressSum += Number(t.progress || 0));
+            const overallPct = total > 0 ? Math.round(totalProgressSum / total) : 0;
+
+            document.getElementById('stat-total').innerText = `${total} Tugas`;
+            document.getElementById('stat-process').innerText = `${inProgress} Tugas`;
+            document.getElementById('stat-done').innerText = `${done} Tugas`;
+            document.getElementById('overall-progress-text').innerText = `${overallPct}%`;
+            document.getElementById('table-summary-text').innerText = `Menampilkan ${total} pekerjaan terdaftar dalam workplan.`;
+        }
+
+        function openTaskModal(taskId = null) {
+            const user = getAuthUser();
+            if (!user) {
+                pendingAction = () => openTaskModal(taskId);
+                openLoginModal();
+                return;
+            }
+
+            document.getElementById('taskForm').reset();
+            document.getElementById('taskId').value = '';
+            document.getElementById('taskModalTitle').innerHTML = '<i class="fa-solid fa-plus text-cyan-400"></i> Tambah Pekerjaan Baru';
+
+            const divSelect = document.getElementById('taskDivision');
+            divSelect.disabled = false;
+
+            // Auto select and lock division if logged in as specific division
+            if (user.division !== 'ALL') {
+                divSelect.value = user.division;
+            }
+
+            if (taskId) {
+                const tasks = getTasks();
+                const task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    if (!canModifyDivision(task.division)) {
+                        showToast(`Akses Ditolak: Anda hanya dapat mengedit pekerjaan ${user.division}!`);
+                        return;
+                    }
+
+                    document.getElementById('taskId').value = task.id;
+                    document.getElementById('taskTitle').value = task.title;
+                    document.getElementById('taskDivision').value = task.division || 'Divisi Automation';
+                    document.getElementById('taskAssignee').value = task.assignee || '';
+                    document.getElementById('taskStartDate').value = task.startDate;
+                    document.getElementById('taskDeadline').value = task.deadline;
+                    document.getElementById('taskStatus').value = task.status;
+                    document.getElementById('taskProgress').value = task.progress;
+                    document.getElementById('taskModalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-cyan-400"></i> Edit Pekerjaan';
+                }
+            }
+
+            document.getElementById('taskModal').classList.remove('hidden');
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+        }
+
+        function saveTaskForm(e) {
+            e.preventDefault();
+            const user = getAuthUser();
+            if (!user) return;
+
+            const id = document.getElementById('taskId').value;
+            const title = document.getElementById('taskTitle').value.trim();
+            const division = document.getElementById('taskDivision').value;
+            const assignee = document.getElementById('taskAssignee').value.trim();
+            const startDate = document.getElementById('taskStartDate').value;
+            const deadline = document.getElementById('taskDeadline').value;
+            const status = document.getElementById('taskStatus').value;
+            const progress = Number(document.getElementById('taskProgress').value);
+
+            if (!canModifyDivision(division)) {
+                showToast(`Akses Ditolak: Anda tidak memiliki izin membuat/mengubah pekerjaan ${division}!`);
+                return;
+            }
+
+            let tasks = getTasks();
+
+            if (id) {
+                // Update
+                tasks = tasks.map(t => t.id == id ? { id: Number(id), title, division, assignee, startDate, deadline, status, progress } : t);
+                showToast('Pekerjaan berhasil diperbarui!');
+            } else {
+                // Create
+                const newTask = { id: Date.now(), title, division, assignee, startDate, deadline, status, progress };
+                tasks.push(newTask);
+                showToast('Pekerjaan baru berhasil ditambahkan!');
+            }
+
+            saveTasks(tasks);
+            closeTaskModal();
+        }
+
+        function editTask(id) {
+            openTaskModal(id);
+        }
+
+        function confirmDeleteTask(id) {
+            const user = getAuthUser();
+            if (!user) {
+                pendingAction = () => confirmDeleteTask(id);
+                openLoginModal();
+                return;
+            }
+
+            const tasks = getTasks();
+            const task = tasks.find(t => t.id === id);
+            if (task && !canModifyDivision(task.division)) {
+                showToast(`Akses Ditolak: Anda tidak memiliki izin menghapus pekerjaan ${task.division}!`);
+                return;
+            }
+
+            deleteTargetId = id;
+            deleteTargetType = 'task';
+            document.getElementById('deleteModalText').innerText = 'Apakah Anda yakin ingin menghapus data pekerjaan ini?';
+            document.getElementById('confirmDeleteBtn').onclick = executeDelete;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function executeDelete() {
+            if (deleteTargetType === 'task') {
+                let tasks = getTasks();
+                tasks = tasks.filter(t => t.id !== deleteTargetId);
+                saveTasks(tasks);
+                showToast('Pekerjaan berhasil dihapus.');
+            } else if (deleteTargetType === 'activity') {
+                let acts = getActivities();
+                acts = acts.filter(a => a.id !== deleteTargetId);
+                saveActivities(acts);
+                showToast('Daily activity berhasil dihapus.');
+            }
+            closeDeleteModal();
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        function resetDefaultData() {
+            const user = getAuthUser();
+            if (!user || user.division !== 'ALL') {
+                showToast('Reset data default hanya dapat dilakukan oleh Master Admin!');
+                if (!user) openLoginModal();
+                return;
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultTasks));
+            localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(defaultActivities));
+            renderDashboard();
+            renderActivities();
+            showToast('Data dikembalikan ke sampel default.');
+        }
+
+        function switchTab(tab) {
+            const workplanView = document.getElementById('workplanViewContainer');
+            const activityView = document.getElementById('activityViewContainer');
+            const tabWorkplanBtn = document.getElementById('tabWorkplanBtn');
+            const tabActivityBtn = document.getElementById('tabActivityBtn');
+
+            if (tab === 'workplan') {
+                workplanView.classList.remove('hidden');
+                activityView.classList.add('hidden');
+                tabWorkplanBtn.className = "flex-1 py-2.5 px-4 text-center rounded-lg font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-slate-900 text-white shadow-sm";
+                tabActivityBtn.className = "flex-1 py-2.5 px-4 text-center rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100";
+            } else {
+                workplanView.classList.add('hidden');
+                activityView.classList.remove('hidden');
+                tabActivityBtn.className = "flex-1 py-2.5 px-4 text-center rounded-lg font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-slate-900 text-white shadow-sm";
+                tabWorkplanBtn.className = "flex-1 py-2.5 px-4 text-center rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100";
+                renderActivities();
+            }
+        }
+
+        function getActivities() {
+            const stored = localStorage.getItem(ACTIVITY_STORAGE_KEY);
+            if (!stored) {
+                localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(defaultActivities));
+                return defaultActivities;
+            }
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return defaultActivities;
+            }
+        }
+
+        function saveActivities(acts) {
+            localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(acts));
+            renderActivities();
+        }
+
+        function renderActivities() {
+            const acts = getActivities();
+            const tasks = getTasks();
+            const feedList = document.getElementById('activityFeedList');
+            const badgeCount = document.getElementById('activityBadgeCount');
+            
+            if (badgeCount) badgeCount.innerText = acts.length;
+            feedList.innerHTML = '';
+
+            if (acts.length === 0) {
+                feedList.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
+                        <i class="fa-solid fa-camera-retro text-4xl mb-3 text-slate-300"></i>
+                        <p class="font-semibold text-slate-600">Belum ada Laporan Daily Activity.</p>
+                        <p class="text-xs text-slate-400 mt-1">Klik "+ Input Daily Activity" untuk menambahkan laporan kegiatan harian baru.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort newest first
+            acts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            acts.forEach(act => {
+                const relatedTask = tasks.find(t => t.id == act.taskId);
+                const taskTitle = relatedTask ? relatedTask.title : 'Pekerjaan Umum';
+                const taskDiv = relatedTask ? relatedTask.division : 'Divisi Automation';
+                
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow';
+                
+                const photoHTML = act.photo ? `
+                    <div class="relative h-48 bg-slate-950 overflow-hidden cursor-pointer group" onclick="openLightbox('${act.photo}', '${act.description.replace(/'/g, "\\'")}')">
+                        <img src="${act.photo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" alt="Laporan Foto">
+                        <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold text-xs gap-1.5">
+                            <i class="fa-solid fa-magnifying-glass-plus text-sm"></i> Perbesar Foto
+                        </div>
+                    </div>
+                ` : `
+                    <div class="h-28 bg-slate-100 flex items-center justify-center text-slate-400 text-xs gap-2 border-b border-slate-100">
+                        <i class="fa-regular fa-image text-lg"></i> Tidak Ada Foto Dokumentasi
+                    </div>
+                `;
+
+                const hasPermission = canModifyDivision(taskDiv);
+                const deleteBtnHTML = hasPermission ? `
+                    <button onclick="confirmDeleteActivity(${act.id})" class="text-xs text-red-500 hover:text-red-700 font-medium flex items-center gap-1">
+                        <i class="fa-solid fa-trash-can"></i> Hapus Activity
+                    </button>
+                ` : '';
+
+                card.innerHTML = `
+                    ${photoHTML}
+                    <div class="p-5 flex-1 flex flex-col">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md truncate max-w-[180px]">
+                                <i class="fa-solid fa-diagram-project mr-1"></i> ${taskTitle}
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-medium">
+                                <i class="fa-regular fa-clock mr-1"></i> ${formatDateTime(act.date)}
+                            </span>
+                        </div>
+                        <p class="text-xs font-bold text-slate-800 mb-1 flex items-center gap-1">
+                            <i class="fa-solid fa-user-gear text-cyan-600"></i> ${act.engineer}
+                        </p>
+                        <p class="text-xs text-slate-600 flex-1 mt-1 leading-relaxed">${act.description}</p>
+                        ${act.notes ? `
+                            <div class="mt-3 bg-amber-50 border border-amber-200 p-2 rounded-lg text-[11px] text-amber-800 flex items-start gap-1.5">
+                                <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                                <span><strong>Kendala:</strong> ${act.notes}</span>
+                            </div>
+                        ` : ''}
+                        ${deleteBtnHTML ? `<div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">${deleteBtnHTML}</div>` : ''}
+                    </div>
+                `;
+                feedList.appendChild(card);
+            });
+        }
+
+        function openActivityModal() {
+            const user = getAuthUser();
+            if (!user) {
+                pendingAction = () => openActivityModal();
+                openLoginModal();
+                return;
+            }
+
+            const tasks = getTasks();
+            const selectElem = document.getElementById('actTaskId');
+            selectElem.innerHTML = '';
+            
+            // Filter tasks user can add activities to
+            const filteredTasks = tasks.filter(t => canModifyDivision(t.division));
+
+            if (filteredTasks.length === 0) {
+                showToast(`Tidak ada pekerjaan terdaftar untuk ${user.division}!`);
+                return;
+            }
+
+            filteredTasks.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.innerText = `[${t.status}] ${t.title}`;
+                selectElem.appendChild(opt);
+            });
+
+            document.getElementById('activityForm').reset();
+            removePhotoPreview();
+            
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('actDate').value = now.toISOString().slice(0, 16);
+            document.getElementById('actEngineer').value = `${user.name} Engineer`;
+
+            document.getElementById('activityModal').classList.remove('hidden');
+        }
+
+        function closeActivityModal() {
+            document.getElementById('activityModal').classList.add('hidden');
+        }
+
+        function previewActivityPhoto(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    currentPhotoDataUrl = evt.target.result;
+                    document.getElementById('actPhotoPreview').src = currentPhotoDataUrl;
+                    document.getElementById('actPhotoPreviewContainer').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePhotoPreview() {
+            currentPhotoDataUrl = '';
+            document.getElementById('actPhotoInput').value = '';
+            document.getElementById('actPhotoPreview').src = '';
+            document.getElementById('actPhotoPreviewContainer').classList.add('hidden');
+        }
+
+        function saveActivityForm(e) {
+            e.preventDefault();
+            const user = getAuthUser();
+            if (!user) return;
+
+            const taskId = document.getElementById('actTaskId').value;
+            const date = document.getElementById('actDate').value;
+            const engineer = document.getElementById('actEngineer').value.trim();
+            const description = document.getElementById('actDescription').value.trim();
+            const notes = document.getElementById('actNotes').value.trim();
+
+            const acts = getActivities();
+            const newAct = {
+                id: Date.now(),
+                taskId: Number(taskId),
+                date,
+                engineer,
+                description,
+                notes,
+                photo: currentPhotoDataUrl
+            };
+
+            acts.push(newAct);
+            saveActivities(acts);
+            closeActivityModal();
+            showToast('Laporan Daily Activity berhasil ditambahkan!');
+        }
+
+        function confirmDeleteActivity(id) {
+            const user = getAuthUser();
+            if (!user) {
+                pendingAction = () => confirmDeleteActivity(id);
+                openLoginModal();
+                return;
+            }
+
+            const acts = getActivities();
+            const act = acts.find(a => a.id === id);
+            const tasks = getTasks();
+            const relatedTask = act ? tasks.find(t => t.id === act.taskId) : null;
+
+            if (relatedTask && !canModifyDivision(relatedTask.division)) {
+                showToast(`Akses Ditolak: Anda hanya dapat menghapus activity ${user.division}!`);
+                return;
+            }
+
+            deleteTargetId = id;
+            deleteTargetType = 'activity';
+            document.getElementById('deleteModalText').innerText = 'Apakah Anda yakin ingin menghapus catatan Daily Activity ini?';
+            document.getElementById('confirmDeleteBtn').onclick = executeDelete;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function openLightbox(src, caption) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxCaption').innerText = caption;
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        function toggleAuthModal() {
+            if (isAdmin()) {
+                logout();
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUsername').value.trim().toLowerCase();
+            const p = document.getElementById('loginPassword').value.trim();
+
+            if (DIVISION_ACCOUNTS[u] && DIVISION_ACCOUNTS[u].pass === p) {
+                const userObj = DIVISION_ACCOUNTS[u];
+                sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(userObj));
+                updateAuthUI();
+                closeLoginModal();
+                renderDashboard();
+                renderActivities();
+                showToast(`Login berhasil sebagai ${userObj.name}!`);
+                
+                if (pendingAction) {
+                    const action = pendingAction;
+                    pendingAction = null;
+                    action();
+                }
+            } else {
+                showToast('Username atau Password divisi salah!');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem(AUTH_SESSION_KEY);
+            updateAuthUI();
+            renderDashboard();
+            renderActivities();
+            showToast('Anda telah keluar (Mode Pengunjung).');
+        }
+
+        function updateAuthUI() {
+            const label = document.getElementById('authLabel');
+            const icon = document.getElementById('authIcon');
+            const user = getAuthUser();
+
+            if (user) {
+                label.innerText = `${user.name} (Logout)`;
+                icon.className = 'fa-solid fa-user-check text-emerald-400';
+            } else {
+                label.innerText = 'Pengunjung (Login)';
+                icon.className = 'fa-solid fa-user-lock text-amber-400';
+            }
+        }
+
+        function initPWA() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+            });
+        }
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('Aplikasi siap di-install! Pada iPhone: Tekan tombol Share di Safari -> "Add to Home Screen".');
+            }
+        }
+
+        function openApkModal() {
+            document.getElementById('apkModal').classList.remove('hidden');
+        }
+
+        function closeApkModal() {
+            document.getElementById('apkModal').classList.add('hidden');
+        }
+
+        function copyCodeUrl() {
+            const htmlContent = document.documentElement.outerHTML;
+            const dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
+            
+            const tempInput = document.createElement('textarea');
+            tempInput.value = dataUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast('URL Kode HTML berhasil disalin ke Clipboard!');
+        }
+
+        function exportPDF() {
+            window.print();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            return `${parts[2]} ${months[parseInt(parts[1]) - 1]} ${parts[0]}`;
+        }
+
+        function formatDateTime(dtStr) {
+            if (!dtStr) return '-';
+            const dt = new Date(dtStr);
+            if (isNaN(dt.getTime())) return dtStr;
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            const day = String(dt.getDate()).padStart(2, '0');
+            const month = months[dt.getMonth()];
+            const year = dt.getFullYear();
+            const hours = String(dt.getHours()).padStart(2, '0');
+            const minutes = String(dt.getMinutes()).padStart(2, '0');
+            return `${day} ${month} ${year}, ${hours}:${minutes}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDashboard();
+            renderActivities();
+            updateAuthUI();
+            initPWA();
+        });
+    </script>
+</body>
+</html>
