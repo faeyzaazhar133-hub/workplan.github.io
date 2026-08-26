@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplan & Daily Activity - PT Pelican Mitra Sejati</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+        .bg-metallic-panel {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            border-bottom: 2px solid #334155;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+        }
+        .text-3d-red {
+            color: #ef4444;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Print Specific Optimization */
+        @media print {
+            header, button, .no-print, #taskModal, #loginModal, #activityModal, #deleteModal, #apkModal, #lightboxModal, #toastNotification {
+                display: none !important;
+            }
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            .shadow-sm, .shadow-md, .shadow-2xl {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+    
+    <script>
+        const manifestData = {
+            "name": "Workplan Pelican Mitra Sejati",
+            "short_name": "Workplan",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#0f172a",
+            "theme_color": "#0f172a",
+            "icons": [{
+                "src": "https://placehold.co/192x192/dc2626/ffffff?text=P",
+                "sizes": "192x192",
+                "type": "image/png"
+            }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = manifestURL;
+        document.head.appendChild(manifestLink);
+    </script>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800 antialiased">
+
+    <header class="bg-metallic-panel text-white sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                
+                <!-- Logo & Company Branding -->
+                <a href="https://pelican-ms.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 group transition-transform transform hover:scale-[1.02]">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-red-600 rounded-xl p-0.5 shadow-xl flex items-center justify-center border border-red-500/60 group-hover:bg-red-500 transition-colors shrink-0 overflow-hidden">
+                        <img src="https://placehold.co/200x200/dc2626/ffffff?text=PELICAN" 
+                             alt="Pelican Mitra Sejati Logo" 
+                             class="w-full h-full object-cover rounded-lg"
+                             onerror="this.onerror=null; this.src='https://placehold.co/200x200/dc2626/ffffff?text=PELICAN';">
+                    </div>
+
+                    <div class="flex flex-col justify-center leading-none font-black uppercase tracking-tight font-sans">
+                        <span class="text-base sm:text-lg text-red-500 tracking-wider text-3d-red">PELICAN</span>
+                        <span class="text-xs sm:text-sm text-white tracking-wider mt-0.5">MITRA</span>
+                        <span class="text-xs sm:text-sm text-white tracking-wider mt-0.5">SEJATI</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Controls -->
+                <div class="flex items-center gap-2 sm:gap-3 ml-auto">
+                    <!-- Live Clock Display -->
+                    <div class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 text-xs font-medium rounded-lg border border-slate-700 text-cyan-300 shadow-sm">
+                        <i class="fa-regular fa-clock text-cyan-400"></i>
+                        <span id="liveClockText">Memuat waktu...</span>
+                    </div>
+
+                    <!-- Auth Status Indicator Button -->
+                    <button id="authBtn" onclick="toggleAuthModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium rounded-lg border border-slate-700 transition-colors">
+                        <i id="authIcon" class="fa-solid fa-user-lock text-amber-400"></i>
+                        <span id="authLabel" class="text-slate-300">Pengunjung</span>
+                    </button>
+
+                    <!-- User Avatar Pill -->
+                    <div class="w-8 h-8 rounded-full bg-cyan-600 border border-cyan-400 flex items-center justify-center text-xs font-extrabold text-white shadow-sm">
+                        PE
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Dashboard Header Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6 mb-6">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2.5 py-0.5 rounded-md text-[11px] font-extrabold bg-red-100 text-red-700 border border-red-200">
+                            PT PELICAN MITRA SEJATI
+                        </span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                        Workplan Automation, Mechanic & Electrician
+                    </h2>
+                    <p class="mt-1 text-xs sm:text-sm text-slate-500 flex items-center gap-1.5">
+                        <i class="fa-solid fa-microchip text-cyan-600"></i> System Operations & Maintenance Progress Management
+                    </p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4 gap-2.5 flex-wrap">
+                    <button type="button" onclick="openPdfRepositoryModal()" class="inline-flex items-center px-3.5 py-2 border border-slate-300 rounded-xl shadow-sm text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-folder-open mr-2 text-amber-500 text-sm"></i> Berkas PDF (<span id="headerPdfCountBadge">0</span>)
+                    </button>
+                    <button type="button" onclick="openTaskModal()" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-md text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-colors">
+                        <i class="fa-solid fa-plus mr-2"></i> Tambah Pekerjaan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation Bar -->
+        <div class="flex border-b border-slate-200 mb-6 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200">
+            <button id="tabWorkplanBtn" onclick="switchTab('workplan')" class="flex-1 py-2.5 px-4 text-center rounded-lg font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-slate-900 text-white shadow-sm">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Workplan Project</span>
+            </button>
+            <button id="tabActivityBtn" onclick="switchTab('activity')" class="flex-1 py-2.5 px-4 text-center rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                <i class="fa-solid fa-camera-retro text-red-600"></i>
+                <span>Daily Activity & Foto Dokumentasi</span>
+                <span id="activityBadgeCount" class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full font-bold ml-1">0</span>
+            </button>
+        </div>
+
+        <div id="workplanViewContainer">
+            <!-- Dynamic Metric Cards -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+                <!-- Total Tasks -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Total Pekerjaan</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="stat-total">0 Tugas</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                </div>
+                <!-- In Progress Tasks -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Dalam Proses</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="stat-process">0 Tugas</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-spinner animate-spin"></i>
+                    </div>
+                </div>
+                <!-- Completed Tasks -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Selesai</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="stat-done">0 Tugas</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                </div>
+                <!-- Overall Progress -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">Progres Keseluruhan</p>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1" id="overall-progress-text">0%</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Tasks Table Card -->
+            <div class="bg-white shadow-sm rounded-2xl border border-slate-200 overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-200 bg-slate-50 flex flex-wrap justify-between items-center gap-3">
+                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-cyan-600"></i> Rincian Jadwal & Workplan
+                    </h3>
+                    <div class="flex items-center gap-3">
+                        <button onclick="resetDefaultData()" class="text-xs text-slate-500 hover:text-red-600 underline font-medium">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Reset Data Default
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Planning Pekerjaan (Tugas)
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Divisi & PIC (Pekerja)
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Jadwal Mulai
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Deadline
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-left text-xs font-extrabold text-slate-600 uppercase tracking-wider min-w-[180px]">
+                                    Persentase Progres
+                                </th>
+                                <th scope="col" class="px-6 py-3.5 text-right text-xs font-extrabold text-slate-600 uppercase tracking-wider">
+                                    Aksi
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-100" id="workplan-body">
+                            <!-- Dynamic Rows Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer Summary -->
+                <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 text-xs text-slate-500 font-medium" id="table-summary-text">
+                    Menampilkan 0 pekerjaan.
+                </div>
+            </div>
+        </div>
+
+        <div id="activityViewContainer" class="hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list text-red-600"></i> Daily Activity & Laporan Lapangan
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">Dokumentasikan aktivitas harian, kendala, dan bukti foto pengerjaan di lapangan (Tanpa batas jumlah foto).</p>
+                </div>
+                <button onclick="openActivityModal()" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors">
+                    <i class="fa-solid fa-camera mr-2"></i> Input Daily Activity
+                </button>
+            </div>
+
+            <!-- Activity Logs Feed Grid -->
+            <div id="activityFeedList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Activity Cards Rendered via JS -->
+            </div>
+        </div>
+    </main>
+
+    <div id="taskModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-lg mx-4 overflow-hidden transform transition-all flex flex-col">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white border-b border-slate-800">
+                <h3 class="text-base font-bold flex items-center gap-2" id="taskModalTitle">
+                    <i class="fa-solid fa-pen-to-square text-cyan-400"></i> Form Pekerjaan
+                </h3>
+                <button onclick="closeTaskModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="taskForm" onsubmit="saveTaskForm(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar">
+                <input type="hidden" id="taskId">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Judul Pekerjaan / Planning</label>
+                    <input type="text" id="taskTitle" required placeholder="Contoh: Maintenance PLC & SCADA" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Divisi Pekerjaan</label>
+                        <select id="taskDivision" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                            <option value="Divisi Automation">Divisi Automation</option>
+                            <option value="Divisi Electrician">Divisi Electrician</option>
+                            <option value="Divisi Mechanic">Divisi Mechanic</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Penanggung Jawab (PIC)</label>
+                        <input type="text" id="taskAssignee" placeholder="Nama Engineer / Teknisi" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tanggal Mulai</label>
+                        <input type="date" id="taskStartDate" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Deadline / Target</label>
+                        <input type="date" id="taskDeadline" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Status Pekerjaan</label>
+                        <select id="taskStatus" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                            <option value="Belum Mulai">Belum Mulai</option>
+                            <option value="Dalam Proses">Dalam Proses</option>
+                            <option value="Selesai">Selesai</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Progres (%)</label>
+                        <input type="number" id="taskProgress" min="0" max="100" required placeholder="0-100" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2.5 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Pekerjaan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md mx-4 overflow-hidden">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white">
+                <h3 class="text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> Login Hak Akses Divisi / Admin
+                </h3>
+                <button onclick="closeLoginModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Login sesuai divisi Anda untuk menambah & mengedit pekerjaan divisi sendiri. Pekerjaan divisi lain terlindungi dari perubahan.
+                </p>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Username / Akun</label>
+                    <input type="text" id="loginUsername" required placeholder="Contoh: admin atau automation" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+                
+                <!-- Credentials Reference -->
+                <div class="text-[11px] bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+                    <div class="font-bold text-slate-700 flex items-center gap-1 mb-1">
+                        <i class="fa-solid fa-key text-amber-500"></i> Daftar Akun & Password Divisi:
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5 text-[11px] text-slate-600">
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-cyan-700 block">Automation:</span>
+                            User: <code class="text-slate-900 font-bold">automation</code><br>Pass: <code class="text-red-600 font-bold">auto2026</code>
+                        </div>
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-amber-700 block">Electrician:</span>
+                            User: <code class="text-slate-900 font-bold">electrician</code><br>Pass: <code class="text-red-600 font-bold">elec2026</code>
+                        </div>
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-blue-700 block">Mechanic:</span>
+                            User: <code class="text-slate-900 font-bold">mechanic</code><br>Pass: <code class="text-red-600 font-bold">mech2026</code>
+                        </div>
+                        <div class="bg-white p-1.5 rounded border border-slate-200">
+                            <span class="font-bold text-slate-900 block">Master Admin:</span>
+                            User: <code class="text-slate-900 font-bold">admin</code><br>Pass: <code class="text-red-600 font-bold">pelican2026</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-right-to-bracket"></i> Masuk Akun
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="activityModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-lg mx-4 overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white border-b border-slate-800">
+                <h3 class="text-base font-bold flex items-center gap-2" id="activityModalTitle">
+                    <i class="fa-solid fa-pen-clip text-cyan-400"></i> Form Laporan Daily Activity
+                </h3>
+                <button onclick="closeActivityModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="activityForm" onsubmit="saveActivityForm(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar">
+                <input type="hidden" id="activityId">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tugas / Project Terkait</label>
+                    <select id="actTaskId" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tanggal & Waktu</label>
+                        <input type="datetime-local" id="actDate" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nama Engineer / PIC</label>
+                        <input type="text" id="actEngineer" required placeholder="Nama Teknisi" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Uraian Kegiatan / Progress</label>
+                    <textarea id="actDescription" required rows="3" placeholder="Jelaskan aktivitas pengerjaan yang dilakukan..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Catatan / Kendala (Opsional)</label>
+                    <input type="text" id="actNotes" placeholder="Contoh: Menunggu sparepart tambahan" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Unggah Foto Dokumentasi Lapangan (Tanpa Batas Max)</label>
+                    <input type="file" id="actPhotoInput" accept="image/*" multiple onchange="previewActivityPhotos(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+                    <p class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-circle-info mr-1"></i> Anda dapat memilih/menambahkan beberapa foto sekaligus tanpa batas maksimal.</p>
+                    
+                    <div id="actPhotoPreviewContainer" class="mt-3 hidden border border-slate-200 bg-slate-50 p-3 rounded-xl">
+                        <div class="flex items-center justify-between mb-2">
+                            <span id="actPhotoCountBadge" class="text-xs font-bold text-slate-700">0 Foto Terpilih</span>
+                            <button type="button" onclick="clearAllPhotoPreviews()" class="text-[11px] text-red-600 font-bold hover:underline">Hapus Semua Foto</button>
+                        </div>
+                        <div id="actPhotoPreviewGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto custom-scrollbar p-1">
+                            <!-- Dynamic preview items -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2.5 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeActivityModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-paper-plane"></i> Simpan Daily Activity
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Delete Confirmation -->
+    <div id="deleteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-sm mx-4 p-6 text-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Konfirmasi Hapus</h3>
+            <p class="text-xs text-slate-500 mt-2" id="deleteModalText">Apakah Anda yakin ingin menghapus data ini?</p>
+            <div class="flex justify-center gap-2.5 mt-5">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50">
+                    Batal
+                </button>
+                <button id="confirmDeleteBtn" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md">
+                    Ya, Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal Foto Navigasi Multi-Foto -->
+    <div id="lightboxModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center z-50 hidden p-4" onclick="closeLightbox()">
+        <div class="relative max-w-4xl max-h-[90vh] w-full flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-10 right-0 text-white text-sm font-bold hover:text-red-400 z-10">
+                <i class="fa-solid fa-xmark text-lg mr-1"></i> Tutup
+            </button>
+            <div class="relative w-full flex items-center justify-center">
+                <button id="lightboxPrevBtn" onclick="navigateLightbox(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center border border-slate-700 text-sm z-10 transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <img id="lightboxImg" class="max-h-[75vh] w-auto object-contain rounded-xl shadow-2xl border border-slate-700" alt="Preview Lightbox">
+                <button id="lightboxNextBtn" onclick="navigateLightbox(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center border border-slate-700 text-sm z-10 transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="flex items-center justify-between w-full mt-3 px-2 flex-wrap gap-2">
+                <p id="lightboxCaption" class="text-white text-xs font-medium bg-slate-900/80 px-4 py-2 rounded-full border border-slate-700 truncate max-w-[60%] sm:max-w-[70%]"></p>
+                <div class="flex items-center gap-2">
+                    <button onclick="downloadCurrentLightboxPhoto()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-500 shadow flex items-center gap-1.5 transition-colors cursor-pointer" title="Unduh Foto Ini">
+                        <i class="fa-solid fa-download"></i> <span>Unduh Foto</span>
+                    </button>
+                    <span id="lightboxCounter" class="text-white text-xs font-bold bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">1 / 1</span>
+                </div>
+            </div>
+            <!-- Strip Navigasi Miniatur Foto untuk Semua Pengunjung -->
+            <div id="lightboxThumbnails" class="flex gap-2 mt-3 max-w-full overflow-x-auto custom-scrollbar p-1"></div>
+        </div>
+    </div>
+
+    <!-- Modal: Repository & Upload PDF Dokumen -->
+    <div id="pdfRepositoryModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white shrink-0">
+                <h3 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf text-red-500"></i> Repositori & Lampiran Dokumen PDF
+                </h3>
+                <button onclick="closePdfRepositoryModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-5">
+                <!-- Info Banner untuk Pengunjung -->
+                <div class="bg-cyan-50 border border-cyan-200 p-3.5 rounded-xl text-cyan-900 text-xs flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-cyan-600 text-base shrink-0"></i>
+                        <span>Seluruh pengunjung dapat mengunduh dokumen PDF teknis, SOP, dan laporan kerja secara gratis di sini.</span>
+                    </div>
+                    <button onclick="togglePdfUploadForm()" id="pdfUploadToggleBtn" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg shrink-0 transition-colors">
+                        <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload PDF Baru
+                    </button>
+                </div>
+
+                <!-- Form Upload PDF Baru (Dapat disembunyikan / tampil) -->
+                <div id="pdfUploadContainer" class="hidden bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-upload text-red-600"></i> Form Unggah Berkas PDF Baru
+                    </h4>
+                    <form onsubmit="handlePdfUpload(event)" class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Judul Dokumen PDF</label>
+                                <input type="text" id="pdfTitleInput" required placeholder="Contoh: SOP Wiring Controller Siemens" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-cyan-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Kategori Dokumen</label>
+                                <select id="pdfCategoryInput" required class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-cyan-500">
+                                    <option value="Divisi Automation">Divisi Automation</option>
+                                    <option value="Divisi Electrician">Divisi Electrician</option>
+                                    <option value="Divisi Mechanic">Divisi Mechanic</option>
+                                    <option value="Umum & Legal">Umum & Legal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Pilih File PDF (Max 3.5 MB)</label>
+                            <input type="file" id="pdfFileInput" accept="application/pdf" required class="w-full text-xs text-slate-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 cursor-pointer">
+                        </div>
+                        <div class="flex justify-end gap-2 pt-1">
+                            <button type="button" onclick="togglePdfUploadForm()" class="px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-600 hover:bg-white">Batal</button>
+                            <button type="submit" class="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg shadow transition-colors flex items-center gap-1">
+                                <i class="fa-solid fa-file-arrow-up"></i> Upload Berkas
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Pencarian & Filter Dokumen PDF -->
+                <div class="flex items-center gap-3">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="pdfSearchInput" oninput="renderPdfList()" placeholder="Cari nama dokumen PDF..." class="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                </div>
+
+                <!-- Daftar File PDF -->
+                <div class="space-y-2" id="pdfListContainer">
+                    <!-- Dynamic PDF item cards rendered via JS -->
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex justify-between items-center shrink-0">
+                <span id="pdfTotalInfo" class="text-xs text-slate-500 font-medium">0 Dokumen PDF Tersedia</span>
+                <button onclick="closePdfRepositoryModal()" class="px-5 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700 text-xs font-bold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all z-50 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toastMessage">Pesan Notifikasi</span>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'pelican_workplan_tasks_v2';
+        const ACTIVITY_STORAGE_KEY = 'pelican_workplan_activities_v2';
+        const PDF_STORAGE_KEY = 'pelican_workplan_pdfs_v2';
+        const AUTH_SESSION_KEY = 'pelican_workplan_user_role_v2';
+
+        const DIVISION_ACCOUNTS = {
+            'admin': { pass: 'pelican2026', name: 'Master Admin', division: 'ALL' },
+            'automation': { pass: 'auto2026', name: 'Divisi Automation', division: 'Divisi Automation' },
+            'electrician': { pass: 'elec2026', name: 'Divisi Electrician', division: 'Divisi Electrician' },
+            'mechanic': { pass: 'mech2026', name: 'Divisi Mechanic', division: 'Divisi Mechanic' }
+        };
+
+        let deferredPrompt = null;
+        let deleteTargetId = null;
+        let deleteTargetType = null; // 'task' | 'activity' | 'pdf'
+        let currentPhotosArray = [];
+        let lightboxPhotos = [];
+        let lightboxIndex = 0;
+        let lightboxCurrentCaption = '';
+        let pendingAction = null;
+
+        function getAuthUser() {
+            const stored = sessionStorage.getItem(AUTH_SESSION_KEY);
+            if (!stored) return null;
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function isAdmin() {
+            const user = getAuthUser();
+            return user !== null;
+        }
+
+        function canModifyDivision(targetDivision) {
+            const user = getAuthUser();
+            if (!user) return false;
+            if (user.division === 'ALL') return true;
+            return user.division === targetDivision;
+        }
+
+        const defaultTasks = [
+            { id: 1, title: 'Instalasi & Wiring Controller PLC Siemens S7-1200 Line A', division: 'Divisi Automation', assignee: 'Budi (Automation Eng.)', startDate: '2026-08-01', deadline: '2026-08-10', status: 'Selesai', progress: 100 },
+            { id: 2, title: 'Desain HMI Touchscreen & Integration SCADA System', division: 'Divisi Automation', assignee: 'Andi (Software Eng.)', startDate: '2026-08-05', deadline: '2026-08-18', status: 'Selesai', progress: 100 },
+            { id: 3, title: 'Kalibrasi Sensor Proximity & Optical Switch Conveyor Belt', division: 'Divisi Electrician', assignee: 'Eko (Senior Electrician)', startDate: '2026-08-12', deadline: '2026-08-25', status: 'Dalam Proses', progress: 75 },
+            { id: 4, title: 'Programming Logic Safety Interlock & Alarm Panel Emergency', division: 'Divisi Automation', assignee: 'Heri (Controls Eng.)', startDate: '2026-08-15', deadline: '2026-08-28', status: 'Dalam Proses', progress: 50 },
+            { id: 5, title: 'Perbaikan Gearbox & Alignment Conveyor Motor Line 2', division: 'Divisi Mechanic', assignee: 'Dedi (Mechanical Eng.)', startDate: '2026-08-22', deadline: '2026-08-30', status: 'Dalam Proses', progress: 20 },
+            { id: 6, title: 'Dokumentasi As-Built Drawing & User Manual Training', division: 'Divisi Electrician', assignee: 'Fajar (Electrician)', startDate: '2026-08-28', deadline: '2026-09-05', status: 'Belum Mulai', progress: 0 }
+        ];
+
+        const defaultActivities = [
+            {
+                id: 101,
+                taskId: 3,
+                date: '2026-08-20T14:30',
+                engineer: 'Eko (Senior Electrician)',
+                description: 'Melakukan wiring controller PLC dan pengetesan sensor proximity pada conveyor belt line A.',
+                notes: 'Semua sensor berfungsi normal.',
+                photos: ['https://placehold.co/600x400/1e293b/38bdf8?text=Dokumentasi+Wiring+PLC'],
+                photo: 'https://placehold.co/600x400/1e293b/38bdf8?text=Dokumentasi+Wiring+PLC'
+            }
+        ];
+
+        const defaultPdfs = [
+            {
+                id: 201,
+                title: 'Manual & SOP Installation Siemens S7-1200 PLC',
+                category: 'Divisi Automation',
+                fileName: 'SOP_Siemens_S71200_Installation.pdf',
+                fileSize: '1.2 MB',
+                uploadDate: '2026-08-20',
+                uploadedBy: 'Master Admin',
+                fileData: 'data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDAKL1R5cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKPj4KZW5kb2JqCjMgMCBvYmoKPDAKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovTWVkaWFCb3ggWzAgMCA1OTUgODQyXQovQ29udGVudHMgNCAwIFIKPj4KZW5kb2JqCjQgMCBvYmoKPDAKL0xlbmd0aCAwCj4+CnN0cmVhbQplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDAwMDU4IDAwMDAwIG4gCjAwMDAwMDAxMTUgMDAwMDAgbiAKMDAwMDAwMDIwMSAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDUKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjI1MQolJUVPRg=='
+            }
+        ];
+
+        function getTasks() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (!stored) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultTasks));
+                return defaultTasks;
+            }
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return defaultTasks;
+            }
+        }
+
+        function saveTasks(tasks) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const tasks = getTasks();
+            const body = document.getElementById('workplan-body');
+            if (!body) return;
+
+            const total = tasks.length;
+            const processCount = tasks.filter(t => t.status === 'Dalam Proses').length;
+            const doneCount = tasks.filter(t => t.status === 'Selesai').length;
+            
+            let totalProgress = 0;
+            if (total > 0) {
+                const sum = tasks.reduce((acc, t) => acc + (Number(t.progress) || 0), 0);
+                totalProgress = Math.round(sum / total);
+            }
+
+            document.getElementById('stat-total').innerText = `${total} Tugas`;
+            document.getElementById('stat-process').innerText = `${processCount} Tugas`;
+            document.getElementById('stat-done').innerText = `${doneCount} Tugas`;
+            document.getElementById('overall-progress-text').innerText = `${totalProgress}%`;
+
+            const summaryText = document.getElementById('table-summary-text');
+            if (summaryText) summaryText.innerText = `Menampilkan ${total} pekerjaan.`;
+
+            if (tasks.length === 0) {
+                body.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-6 py-8 text-center text-xs text-slate-400">
+                            <i class="fa-solid fa-folder-open text-2xl text-slate-300 mb-2"></i>
+                            <p>Belum ada pekerjaan. Klik "Tambah Pekerjaan" untuk menambahkan.</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            body.innerHTML = tasks.map(task => {
+                let statusBadge = 'bg-slate-100 text-slate-700 border-slate-200';
+                if (task.status === 'Selesai') statusBadge = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+                else if (task.status === 'Dalam Proses') statusBadge = 'bg-amber-100 text-amber-800 border-amber-200';
+
+                let divBadge = 'bg-cyan-50 text-cyan-700 border-cyan-200';
+                if (task.division === 'Divisi Electrician') divBadge = 'bg-amber-50 text-amber-700 border-amber-200';
+                else if (task.division === 'Divisi Mechanic') divBadge = 'bg-blue-50 text-blue-700 border-blue-200';
+
+                const canModify = canModifyDivision(task.division);
+
+                return `
+                    <tr class="hover:bg-slate-50/80 transition-colors">
+                        <td class="px-6 py-4 text-xs font-bold text-slate-900 max-w-xs">
+                            ${task.title}
+                        </td>
+                        <td class="px-6 py-4 text-xs text-slate-600">
+                            <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${divBadge} mb-1">
+                                ${task.division}
+                            </span>
+                            <div class="font-medium text-slate-700"><i class="fa-solid fa-user-gear text-slate-400 mr-1"></i>${task.assignee || '-'}</div>
+                        </td>
+                        <td class="px-6 py-4 text-xs font-medium text-slate-600">
+                            ${formatDate(task.startDate)}
+                        </td>
+                        <td class="px-6 py-4 text-xs font-medium text-slate-600">
+                            ${formatDate(task.deadline)}
+                        </td>
+                        <td class="px-6 py-4 text-xs">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold border ${statusBadge}">
+                                ${task.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-xs min-w-[180px]">
+                            <div class="flex items-center gap-2">
+                                <div class="flex-1 bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                                    <div class="bg-cyan-600 h-2.5 rounded-full transition-all duration-300" style="width: ${task.progress}%"></div>
+                                </div>
+                                <span class="font-bold text-slate-700 text-xs w-9 text-right">${task.progress}%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-xs text-right whitespace-nowrap">
+                            ${canModify ? `
+                                <button onclick="openTaskModal(${task.id})" class="p-1.5 text-slate-500 hover:text-cyan-600 transition-colors mr-1" title="Edit Pekerjaan">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="deleteTask(${task.id})" class="p-1.5 text-slate-500 hover:text-red-600 transition-colors" title="Hapus Pekerjaan">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            ` : `
+                                <span class="text-[11px] text-slate-400 italic"><i class="fa-solid fa-lock text-[10px]"></i> Pengunjung</span>
+                            `}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openTaskModal(id = null) {
+            const user = getAuthUser();
+            if (!user) {
+                pendingAction = () => openTaskModal(id);
+                openLoginModal();
+                return;
+            }
+
+            const form = document.getElementById('taskForm');
+            form.reset();
+            document.getElementById('taskId').value = '';
+            
+            if (id) {
+                const tasks = getTasks();
+                const task = tasks.find(t => t.id === id);
+                if (task) {
+                    if (!canModifyDivision(task.division)) {
+                        showToast('Anda hanya dapat mengedit pekerjaan divisi Anda sendiri!');
+                        return;
+                    }
+                    document.getElementById('taskId').value = task.id;
+                    document.getElementById('taskTitle').value = task.title;
+                    document.getElementById('taskDivision').value = task.division;
+                    document.getElementById('taskAssignee').value = task.assignee || '';
+                    document.getElementById('taskStartDate').value = task.startDate;
+                    document.getElementById('taskDeadline').value = task.deadline;
+                    document.getElementById('taskStatus').value = task.status;
+                    document.getElementById('taskProgress').value = task.progress;
+                    document.getElementById('taskModalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-cyan-400"></i> Edit Pekerjaan';
+                }
+            } else {
+                document.getElementById('taskModalTitle').innerHTML = '<i class="fa-solid fa-plus text-cyan-400"></i> Tambah Pekerjaan Baru';
+                if (user.division !== 'ALL') {
+                    document.getElementById('taskDivision').value = user.division;
+                }
+                document.getElementById('taskStartDate').value = new Date().toISOString().slice(0, 10);
+            }
+
+            document.getElementById('taskModal').classList.remove('hidden');
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+        }
+
+        function saveTaskForm(e) {
+            e.preventDefault();
+            const user = getAuthUser();
+            if (!user) return;
+
+            const id = document.getElementById('taskId').value;
+            const title = document.getElementById('taskTitle').value.trim();
+            const division = document.getElementById('taskDivision').value;
+            const assignee = document.getElementById('taskAssignee').value.trim();
+            const startDate = document.getElementById('taskStartDate').value;
+            const deadline = document.getElementById('taskDeadline').value;
+            const status = document.getElementById('taskStatus').value;
+            const progress = Number(document.getElementById('taskProgress').value);
+
+            if (!canModifyDivision(division)) {
+                showToast('Anda tidak memiliki izin untuk menyimpan pada divisi ini!');
+                return;
+            }
+
+            let tasks = getTasks();
+
+            if (id) {
+                tasks = tasks.map(t => t.id == id ? { id: Number(id), title, division, assignee, startDate, deadline, status, progress } : t);
+                showToast('Pekerjaan berhasil diperbarui!');
+            } else {
+                const newTask = {
+                    id: Date.now(),
+                    title,
+                    division,
+                    assignee,
+                    startDate,
+                    deadline,
+                    status,
+                    progress
+                };
+                tasks.push(newTask);
+                showToast('Pekerjaan baru berhasil ditambahkan!');
+            }
+
+            saveTasks(tasks);
+            closeTaskModal();
+        }
+
+        function deleteTask(id) {
+            const tasks = getTasks();
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+
+            if (!canModifyDivision(task.division)) {
+                showToast('Anda tidak memiliki izin menghapus pekerjaan divisi ini!');
+                return;
+            }
+
+            openDeleteModal(id, 'task');
+        }
+
+        function openDeleteModal(id, type) {
+            deleteTargetId = id;
+            deleteTargetType = type;
+            const modal = document.getElementById('deleteModal');
+            const text = document.getElementById('deleteModalText');
+            
+            if (type === 'task') {
+                text.innerText = 'Apakah Anda yakin ingin menghapus data pekerjaan ini?';
+            } else if (type === 'activity') {
+                text.innerText = 'Apakah Anda yakin ingin menghapus laporan Daily Activity ini?';
+            } else if (type === 'pdf') {
+                text.innerText = 'Apakah Anda yakin ingin menghapus berkas PDF ini?';
+            }
+
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            confirmBtn.onclick = executeDelete;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            deleteTargetId = null;
+            deleteTargetType = null;
+        }
+
+        function executeDelete() {
+            if (!deleteTargetId || !deleteTargetType) return;
+
+            if (deleteTargetType === 'task') {
+                let tasks = getTasks();
+                tasks = tasks.filter(t => t.id !== deleteTargetId);
+                saveTasks(tasks);
+                showToast('Pekerjaan telah dihapus.');
+            } else if (deleteTargetType === 'activity') {
+                let acts = getActivities();
+                acts = acts.filter(a => a.id !== deleteTargetId);
+                saveActivities(acts);
+                showToast('Laporan Daily Activity telah dihapus.');
+            } else if (deleteTargetType === 'pdf') {
+                let pdfs = getPDFs();
+                pdfs = pdfs.filter(p => p.id !== deleteTargetId);
+                savePDFs(pdfs);
+                showToast('Dokumen PDF telah dihapus.');
+            }
+
+            closeDeleteModal();
+        }
+
+        function getActivities() {
+            const stored = localStorage.getItem(ACTIVITY_STORAGE_KEY);
+            if (!stored) {
+                localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(defaultActivities));
+                return defaultActivities;
+            }
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return defaultActivities;
+            }
+        }
+
+        function saveActivities(activities) {
+            localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(activities));
+            renderActivities();
+        }
+
+        function switchTab(tabName) {
+            const workplanBtn = document.getElementById('tabWorkplanBtn');
+            const activityBtn = document.getElementById('tabActivityBtn');
+            const workplanContainer = document.getElementById('workplanViewContainer');
+            const activityContainer = document.getElementById('activityViewContainer');
+
+            if (tabName === 'workplan') {
+                workplanBtn.className = 'flex-1 py-2.5 px-4 text-center rounded-lg font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-slate-900 text-white shadow-sm';
+                activityBtn.className = 'flex-1 py-2.5 px-4 text-center rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100';
+                workplanContainer.classList.remove('hidden');
+                activityContainer.classList.add('hidden');
+            } else {
+                activityBtn.className = 'flex-1 py-2.5 px-4 text-center rounded-lg font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-slate-900 text-white shadow-sm';
+                workplanBtn.className = 'flex-1 py-2.5 px-4 text-center rounded-lg font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100';
+                activityContainer.classList.remove('hidden');
+                workplanContainer.classList.add('hidden');
+            }
+        }
+
+        function renderActivities() {
+            const activities = getActivities();
+            const tasks = getTasks();
+            const feedList = document.getElementById('activityFeedList');
+            const badgeCount = document.getElementById('activityBadgeCount');
+
+            if (badgeCount) badgeCount.innerText = activities.length;
+            if (!feedList) return;
+
+            if (activities.length === 0) {
+                feedList.innerHTML = `
+                    <div class="col-span-full bg-white p-8 rounded-2xl border border-dashed border-slate-300 text-center text-slate-400">
+                        <i class="fa-solid fa-camera-retro text-3xl mb-2 text-slate-300"></i>
+                        <p class="text-xs">Belum ada aktivitas daily activity yang ditambahkan.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            feedList.innerHTML = activities.map(act => {
+                const relatedTask = tasks.find(t => t.id === act.taskId) || { title: 'Tugas Tidak Ditemukan', division: 'Umum' };
+                const photosList = (act.photos && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+                const canModify = canModifyDivision(relatedTask.division);
+
+                let divBadge = 'bg-cyan-50 text-cyan-700 border-cyan-200';
+                if (relatedTask.division === 'Divisi Electrician') divBadge = 'bg-amber-50 text-amber-700 border-amber-200';
+                else if (relatedTask.division === 'Divisi Mechanic') divBadge = 'bg-blue-50 text-blue-700 border-blue-200';
+
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${divBadge}">
+                                    ${relatedTask.division}
+                                </span>
+                                <span class="text-[11px] font-medium text-slate-400">
+                                    <i class="fa-regular fa-clock mr-1"></i>${formatDateTime(act.date)}
+                                </span>
+                            </div>
+
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1 mb-1" title="${relatedTask.title}">
+                                ${relatedTask.title}
+                            </h4>
+                            
+                            <p class="text-[11px] font-semibold text-slate-600 mb-3">
+                                <i class="fa-solid fa-user text-slate-400 mr-1"></i>${act.engineer}
+                            </p>
+
+                            <p class="text-xs text-slate-700 leading-relaxed mb-3 bg-slate-50 p-3 rounded-xl border border-slate-100 whitespace-pre-line">
+                                ${act.description}
+                            </p>
+
+                            ${act.notes ? `
+                                <div class="text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded-lg border border-amber-200 mb-3 flex items-start gap-1.5">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5 shrink-0"></i>
+                                    <span>${act.notes}</span>
+                                </div>
+                            ` : ''}
+
+                            <!-- Multi-Photo Scrollable Gallery -->
+                            ${photosList.length > 0 ? `
+                                <div class="mt-3">
+                                    <div class="flex items-center justify-between mb-1.5 text-[11px] font-bold text-slate-600">
+                                        <span><i class="fa-solid fa-images mr-1 text-red-500"></i> ${photosList.length} Foto Dokumentasi</span>
+                                        <span class="text-[10px] text-slate-400 font-normal">Klik foto untuk memperbesar</span>
+                                    </div>
+                                    <div class="flex gap-2 overflow-x-auto custom-scrollbar pb-2">
+                                        ${photosList.map((photoUrl, idx) => `
+                                            <div class="relative group shrink-0 w-24 h-24 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 cursor-pointer shadow-sm">
+                                                <img src="${photoUrl}" alt="Dokumentasi" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onclick="openLightboxForActivity(${act.id}, ${idx})">
+                                                <button onclick="downloadImage('${photoUrl}', 'foto-daily-${act.id}-${idx+1}.png')" class="absolute top-1 right-1 bg-slate-900/80 hover:bg-emerald-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] shadow transition-colors" title="Unduh Foto Ini">
+                                                    <i class="fa-solid fa-download"></i>
+                                                </button>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="bg-slate-50 px-5 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[10px] text-slate-400 font-medium">ID Activity #${act.id}</span>
+                            <div class="flex items-center gap-2">
+                                ${canModify ? `
+                                    <button onclick="openActivityModal(${act.id})" class="px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-cyan-600 transition-colors" title="Edit Laporan">
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                    </button>
+                                    <button onclick="deleteActivity(${act.id})" class="px-2.5 py-1 text-xs font-bold text-slate-600 hover:text-red-600 transition-colors" title="Hapus Laporan">
+                                        <i class="fa-solid fa-trash-can"></i> Hapus
+                                    </button>
+                                ` : `
+                                    <span class="text-[10px] text-slate-400 italic"><i class="fa-solid fa-eye mr-1"></i>Publik</span>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openActivityModal(id = null) {
+            const user = getAuthUser();
+            if (!user) {
+                pendingAction = () => openActivityModal(id);
+                openLoginModal();
+                return;
+            }
+
+            const tasks = getTasks();
+            const select = document.getElementById('actTaskId');
+            select.innerHTML = tasks.map(t => `<option value="${t.id}">[${t.division}] ${t.title}</option>`).join('');
+
+            const form = document.getElementById('activityForm');
+            form.reset();
+            currentPhotosArray = [];
+            renderPhotoPreviews();
+
+            document.getElementById('activityId').value = '';
+            
+            if (id) {
+                const acts = getActivities();
+                const act = acts.find(a => a.id === id);
+                if (act) {
+                    document.getElementById('activityId').value = act.id;
+                    document.getElementById('actTaskId').value = act.taskId;
+                    document.getElementById('actDate').value = act.date;
+                    document.getElementById('actEngineer').value = act.engineer;
+                    document.getElementById('actDescription').value = act.description;
+                    document.getElementById('actNotes').value = act.notes || '';
+                    currentPhotosArray = act.photos ? [...act.photos] : (act.photo ? [act.photo] : []);
+                    renderPhotoPreviews();
+                    document.getElementById('activityModalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-cyan-400"></i> Edit Laporan Daily Activity';
+                }
+            } else {
+                document.getElementById('activityModalTitle').innerHTML = '<i class="fa-solid fa-pen-clip text-cyan-400"></i> Form Laporan Daily Activity';
+                document.getElementById('actDate').value = new Date().toISOString().slice(0, 16);
+                if (user && user.name) {
+                    document.getElementById('actEngineer').value = user.name;
+                }
+            }
+
+            document.getElementById('activityModal').classList.remove('hidden');
+        }
+
+        function closeActivityModal() {
+            document.getElementById('activityModal').classList.add('hidden');
+        }
+
+        function previewActivityPhotos(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentPhotosArray.push(e.target.result);
+                    renderPhotoPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderPhotoPreviews() {
+            const container = document.getElementById('actPhotoPreviewContainer');
+            const grid = document.getElementById('actPhotoPreviewGrid');
+            const badge = document.getElementById('actPhotoCountBadge');
+
+            if (!container || !grid) return;
+
+            if (currentPhotosArray.length === 0) {
+                container.classList.add('hidden');
+                grid.innerHTML = '';
+                return;
+            }
+
+            container.classList.remove('hidden');
+            if (badge) badge.innerText = `${currentPhotosArray.length} Foto Terpilih`;
+
+            grid.innerHTML = currentPhotosArray.map((url, idx) => `
+                <div class="relative group rounded-lg overflow-hidden border border-slate-300 h-20 bg-slate-900">
+                    <img src="${url}" class="w-full h-full object-cover">
+                    <button type="button" onclick="removePhotoPreview(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow hover:bg-red-700">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function removePhotoPreview(index) {
+            currentPhotosArray.splice(index, 1);
+            renderPhotoPreviews();
+        }
+
+        function clearAllPhotoPreviews() {
+            currentPhotosArray = [];
+            renderPhotoPreviews();
+        }
+
+        function deleteActivity(id) {
+            const acts = getActivities();
+            const act = acts.find(a => a.id === id);
+            if (!act) return;
+
+            const tasks = getTasks();
+            const task = tasks.find(t => t.id === act.taskId) || {};
+
+            if (!canModifyDivision(task.division)) {
+                showToast('Anda tidak memiliki izin menghapus laporan ini!');
+                return;
+            }
+
+            openDeleteModal(id, 'activity');
+        }
+
+        function openLightboxForActivity(actId, photoIndex = 0) {
+            const acts = getActivities();
+            const act = acts.find(a => a.id === actId);
+            if (!act) return;
+
+            const tasks = getTasks();
+            const task = tasks.find(t => t.id === act.taskId) || { title: 'Tugas' };
+
+            lightboxPhotos = act.photos ? [...act.photos] : (act.photo ? [act.photo] : []);
+            lightboxIndex = photoIndex;
+            lightboxCurrentCaption = `${task.title} - ${act.engineer}`;
+
+            updateLightboxUI();
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function updateLightboxUI() {
+            if (!lightboxPhotos || lightboxPhotos.length === 0) return;
+
+            const img = document.getElementById('lightboxImg');
+            const caption = document.getElementById('lightboxCaption');
+            const counter = document.getElementById('lightboxCounter');
+            const thumbs = document.getElementById('lightboxThumbnails');
+
+            img.src = lightboxPhotos[lightboxIndex];
+            caption.innerText = lightboxCurrentCaption;
+            counter.innerText = `${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+
+            thumbs.innerHTML = lightboxPhotos.map((p, idx) => `
+                <img src="${p}" onclick="lightboxIndex=${idx}; updateLightboxUI();" class="w-12 h-12 object-cover rounded-lg border-2 cursor-pointer transition-all ${idx === lightboxIndex ? 'border-red-500 scale-105' : 'border-transparent opacity-60 hover:opacity-100'}">
+            `).join('');
+        }
+
+        function deletePdfFile(id) {
+            const pdfs = getPDFs();
+            const doc = pdfs.find(p => p.id === id);
+            if (!doc) return;
+
+            const user = getAuthUser();
+            if (!user || (user.division !== 'ALL' && user.division !== doc.category)) {
+                showToast('Anda tidak memiliki izin menghapus berkas PDF ini!');
+                return;
+            }
+
+            openDeleteModal(id, 'pdf');
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr;
+            return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function formatDateTime(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr;
+            return d.toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const msgEl = document.getElementById('toastMessage');
+            if (!toast || !msgEl) return;
+            msgEl.innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function downloadImage(url, filename = 'download.png') {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function toggleAuthModal() {
+            const user = getAuthUser();
+            if (user) {
+                if (confirm('Apakah Anda yakin ingin keluar (Logout)?')) {
+                    sessionStorage.removeItem(AUTH_SESSION_KEY);
+                    updateAuthUI();
+                    renderDashboard();
+                    renderActivities();
+                    showToast('Anda telah keluar.');
+                }
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('loginUsername').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPassword').value.trim();
+
+            if (DIVISION_ACCOUNTS[user] && DIVISION_ACCOUNTS[user].pass === pass) {
+                const authData = DIVISION_ACCOUNTS[user];
+                sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({
+                    username: user,
+                    name: authData.name,
+                    division: authData.division
+                }));
+                closeLoginModal();
+                updateAuthUI();
+                renderDashboard();
+                renderActivities();
+                showToast(`Selamat datang, ${authData.name}!`);
+
+                if (typeof pendingAction === 'function') {
+                    const action = pendingAction;
+                    pendingAction = null;
+                    action();
+                }
+            } else {
+                showToast('Username atau password salah!');
+            }
+        }
+
+        function updateAuthUI() {
+            const user = getAuthUser();
+            const label = document.getElementById('authLabel');
+            const icon = document.getElementById('authIcon');
+
+            if (user) {
+                if (label) label.innerText = user.name;
+                if (icon) icon.className = 'fa-solid fa-user-check text-emerald-400';
+            } else {
+                if (label) label.innerText = 'Pengunjung';
+                if (icon) icon.className = 'fa-solid fa-user-lock text-amber-400';
+            }
+        }
+
+        function saveActivityForm(e) {
+            e.preventDefault();
+            const id = document.getElementById('activityId').value;
+            const taskId = Number(document.getElementById('actTaskId').value);
+            const date = document.getElementById('actDate').value;
+            const engineer = document.getElementById('actEngineer').value.trim();
+            const description = document.getElementById('actDescription').value.trim();
+            const notes = document.getElementById('actNotes').value.trim();
+
+            let acts = getActivities();
+
+            if (id) {
+                acts = acts.map(a => a.id == id ? {
+                    ...a,
+                    taskId,
+                    date,
+                    engineer,
+                    description,
+                    notes,
+                    photos: [...currentPhotosArray]
+                } : a);
+                showToast('Daily Activity berhasil diperbarui!');
+            } else {
+                const newAct = {
+                    id: Date.now(),
+                    taskId,
+                    date,
+                    engineer,
+                    description,
+                    notes,
+                    photos: [...currentPhotosArray]
+                };
+                acts.unshift(newAct);
+                showToast('Daily Activity berhasil ditambahkan!');
+            }
+
+            saveActivities(acts);
+            closeActivityModal();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        function navigateLightbox(direction) {
+            if (!lightboxPhotos || lightboxPhotos.length === 0) return;
+            lightboxIndex = (lightboxIndex + direction + lightboxPhotos.length) % lightboxPhotos.length;
+            updateLightboxUI();
+        }
+
+        function downloadCurrentLightboxPhoto() {
+            if (!lightboxPhotos || lightboxPhotos.length === 0) return;
+            downloadImage(lightboxPhotos[lightboxIndex], `dokumentasi-${lightboxIndex + 1}.png`);
+        }
+
+        function openApkModal() {
+            document.getElementById('apkModal').classList.remove('hidden');
+        }
+
+        function closeApkModal() {
+            document.getElementById('apkModal').classList.add('hidden');
+        }
+
+        function initPWA() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+            });
+        }
+
+        function exportPDF() {
+            window.print();
+        }
+
+        function getPDFs() {
+            const stored = localStorage.getItem(PDF_STORAGE_KEY);
+            if (!stored) {
+                localStorage.setItem(PDF_STORAGE_KEY, JSON.stringify(defaultPdfs));
+                return defaultPdfs;
+            }
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return defaultPdfs;
+            }
+        }
+
+        function savePDFs(pdfs) {
+            localStorage.setItem(PDF_STORAGE_KEY, JSON.stringify(pdfs));
+            renderPdfList();
+            updatePdfBadges();
+        }
+
+        function updatePdfBadges() {
+            const pdfs = getPDFs();
+            const badge = document.getElementById('headerPdfCountBadge');
+            if (badge) badge.innerText = pdfs.length;
+        }
+
+        function openPdfRepositoryModal() {
+            renderPdfList();
+            document.getElementById('pdfRepositoryModal').classList.remove('hidden');
+        }
+
+        function closePdfRepositoryModal() {
+            document.getElementById('pdfRepositoryModal').classList.add('hidden');
+        }
+
+        function togglePdfUploadForm() {
+            const container = document.getElementById('pdfUploadContainer');
+            if (container) container.classList.toggle('hidden');
+        }
+
+        function handlePdfUpload(e) {
+            e.preventDefault();
+            const title = document.getElementById('pdfTitleInput').value.trim();
+            const category = document.getElementById('pdfCategoryInput').value;
+            const fileInput = document.getElementById('pdfFileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showToast('Silakan pilih file PDF!');
+                return;
+            }
+
+            if (file.size > 3.5 * 1024 * 1024) {
+                showToast('Ukuran file maksimal 3.5 MB!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const user = getAuthUser();
+                const newPdf = {
+                    id: Date.now(),
+                    title: title,
+                    category: category,
+                    fileName: file.name,
+                    fileSize: (file.size / (1024 * 1024)).toFixed(1) + ' MB',
+                    uploadDate: new Date().toISOString().slice(0, 10),
+                    uploadedBy: user ? user.name : 'Pengunjung',
+                    fileData: evt.target.result
+                };
+                const pdfs = getPDFs();
+                pdfs.unshift(newPdf);
+                savePDFs(pdfs);
+                showToast('Berkas PDF berhasil diunggah!');
+                togglePdfUploadForm();
+                e.target.reset();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderPdfList() {
+            const pdfs = getPDFs();
+            const searchVal = (document.getElementById('pdfSearchInput')?.value || '').toLowerCase();
+            const container = document.getElementById('pdfListContainer');
+            const info = document.getElementById('pdfTotalInfo');
+
+            const filtered = pdfs.filter(p => p.title.toLowerCase().includes(searchVal) || p.category.toLowerCase().includes(searchVal));
+
+            if (info) info.innerText = `${filtered.length} Dokumen PDF Tersedia`;
+            if (!container) return;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 text-slate-400 text-xs">
+                        <i class="fa-solid fa-folder-open text-2xl mb-1"></i>
+                        <p>Tidak ada berkas PDF ditemukan.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(pdf => `
+                <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center text-red-600 font-bold shrink-0 text-lg">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h5 class="text-xs font-bold text-slate-900 truncate" title="${pdf.title}">${pdf.title}</h5>
+                            <div class="flex items-center gap-2 text-[10px] text-slate-500 mt-0.5 flex-wrap">
+                                <span class="px-1.5 py-0.5 rounded bg-slate-100 font-semibold text-slate-700">${pdf.category}</span>
+                                <span><i class="fa-solid fa-hard-drive mr-1"></i>${pdf.fileSize}</span>
+                                <span><i class="fa-regular fa-calendar mr-1"></i>${pdf.uploadDate}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <a href="${pdf.fileData}" download="${pdf.fileName}" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid fa-download text-[11px]"></i> Unduh
+                        </a>
+                        <button onclick="deletePdfFile(${pdf.id})" class="p-1.5 text-slate-400 hover:text-red-600 text-xs transition-colors" title="Hapus PDF">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function resetDefaultData() {
+            if (confirm('Apakah Anda yakin ingin mengembalikan seluruh data ke default awal?')) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultTasks));
+                localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(defaultActivities));
+                localStorage.setItem(PDF_STORAGE_KEY, JSON.stringify(defaultPdfs));
+                renderDashboard();
+                renderActivities();
+                updatePdfBadges();
+                showToast('Data berhasil di-reset ke default.');
+            }
+        }
+
+        function initLiveClock() {
+            const clockElement = document.getElementById('liveClockText');
+            if (!clockElement) return;
+
+            const updateClock = () => {
+                const now = new Date();
+                const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
+                const datePart = now.toLocaleDateString('id-ID', options);
+                const timePart = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                clockElement.innerText = `${datePart} - ${timePart}`;
+            };
+
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDashboard();
+            renderActivities();
+            updateAuthUI();
+            updatePdfBadges();
+            initLiveClock();
+        });
+    </script>
+</body>
+</html>
